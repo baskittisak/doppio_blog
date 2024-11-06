@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { blacklist } from "../middleware/auth.middleware.js";
 
 export const register = async (req, res) => {
   try {
@@ -39,14 +40,10 @@ const signJwtToken = (user, res) => {
   const { SECRET_KEY } = process.env;
   if (!SECRET_KEY) throw "Internal server error: Missing SECRET_KEY";
 
-  jwt.sign(
-    payload,
-    SECRET_KEY,
-    (error, token) => {
-      if (error) throw error;
-      res.status(200).json({ data: token, message: "User login successfully" });
-    }
-  );
+  jwt.sign(payload, SECRET_KEY, (error, token) => {
+    if (error) throw error;
+    res.status(200).json({ data: token, message: "User login successfully" });
+  });
 };
 
 export const login = async (req, res) => {
@@ -64,6 +61,27 @@ export const login = async (req, res) => {
       }
     } else {
       res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token) {
+      blacklist.add(token);
+      res.status(200).json({ message: "User logout successfully" });
+    } else {
+      res
+        .status(401)
+        .json({ message: "No token provided, authorization denied" });
     }
   } catch (error) {
     if (error instanceof Error) {
