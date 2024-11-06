@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "universal-cookie";
-import Register from ".././authentication/Register";
-import Login from ".././authentication/Login";
-import NotFound from "./NotFound";
-import HandleBlog from "../blog/HandleBlog";
-import Layout from "../layout/Layout";
-import Blogs from "../blog/Blogs";
+import Register from "./authentication/Register";
+import Login from "./authentication/Login";
+import NotFound from "./utils/NotFound";
+import HandleBlog from "./blog/HandleBlog";
+import Layout from "./layout/Layout";
+import Blogs from "./blog/Blogs";
 
 const PageRoutes = () => {
   const routes = useMemo(() => {
