@@ -5,7 +5,6 @@ import Button from "antd/lib/button";
 import Space from "antd/lib/space";
 import Input from "antd/lib/input";
 import notification from "antd/lib/notification";
-import EditOutlined from "@ant-design/icons/EditOutlined";
 import SaveOutlined from "@ant-design/icons/SaveOutlined";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -67,7 +66,7 @@ function HandleBlog({ action }: HandleBlogProps) {
   return (
     <>
       <Space className="handle-blog-button">
-        <Button icon={<EditOutlined />} disabled={loading} onClick={onCancel}>
+        <Button disabled={loading} onClick={onCancel}>
           Cancel
         </Button>
         <Button

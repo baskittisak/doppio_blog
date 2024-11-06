@@ -7,6 +7,30 @@ import NotFound from "./utils/NotFound";
 import HandleBlog from "./blog/HandleBlog";
 import Layout from "./layout/Layout";
 import Blogs from "./blog/Blogs";
+import BlogDetail from "./blog/BlogDetail";
+
+const paths = [
+  {
+    path: "/",
+    component: <Blogs />,
+  },
+  {
+    path: "/new-blog",
+    component: <HandleBlog action="create" />,
+  },
+  {
+    path: "/new-blog",
+    component: <HandleBlog action="create" />,
+  },
+  {
+    path: "/edit/:id",
+    component: <HandleBlog action="edit" />,
+  },
+  {
+    path: "/blog/:id",
+    component: <BlogDetail />,
+  },
+];
 
 const PageRoutes = () => {
   const routes = useMemo(() => {
@@ -15,30 +39,13 @@ const PageRoutes = () => {
     if (cookies.get("access_token")) {
       return (
         <>
-          <Route
-            path="/"
-            element={
-              <Layout>
-                <Blogs />
-              </Layout>
-            }
-          />
-          <Route
-            path="/new-blog"
-            element={
-              <Layout>
-                <HandleBlog action="create" />
-              </Layout>
-            }
-          />
-          <Route
-            path="/edit"
-            element={
-              <Layout>
-                <HandleBlog action="edit" />
-              </Layout>
-            }
-          />
+          {paths.map((path) => (
+            <Route
+              key={path.path}
+              path={path.path}
+              element={<Layout>{path.component}</Layout>}
+            />
+          ))}
         </>
       );
     } else {
