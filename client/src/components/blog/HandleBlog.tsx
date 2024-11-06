@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import "./style/blogs.css";
 import axios from "axios";
 import Button from "antd/lib/button";
@@ -8,8 +8,12 @@ import notification from "antd/lib/notification";
 import SaveOutlined from "@ant-design/icons/SaveOutlined";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { handleError } from "../../utils/errorService";
+import useSWR from "swr";
+import { IBlog } from "./interface/IBlog";
+import Loading from "../utils/Loading";
+import Error from "../utils/Error";
 
 const modules = {
   toolbar: [
@@ -27,6 +31,7 @@ interface HandleBlogProps {
 }
 
 function HandleBlog({ action }: HandleBlogProps) {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -35,6 +40,21 @@ function HandleBlog({ action }: HandleBlogProps) {
   const isEdit = useMemo(() => {
     return action === "edit";
   }, [action]);
+
+  const { data, error } = useSWR<IBlog>(id && isEdit && `/blog/${id}`);
+
+  const initialData = useCallback(() => {
+    if (data) {
+      setTitle(data.title);
+      setContent(data.content);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isEdit && id) {
+      initialData();
+    }
+  }, [id, isEdit, initialData]);
 
   const onCancel = useCallback(() => {
     navigate("/");
@@ -50,7 +70,9 @@ function HandleBlog({ action }: HandleBlogProps) {
 
       const {
         data: { message },
-      } = await axios.post("/blog", body);
+      } = isEdit
+        ? await axios.put(`/blog/${id}`, body)
+        : await axios.post("/blog", body);
 
       notification.success({
         message,
@@ -61,7 +83,10 @@ function HandleBlog({ action }: HandleBlogProps) {
       handleError(error);
       setLoading(false);
     }
-  }, [content, title, navigate]);
+  }, [title, content, isEdit, id, navigate]);
+
+  if (!data && !error) return <Loading total={3} />;
+  if (error) return <Error />;
 
   return (
     <>
