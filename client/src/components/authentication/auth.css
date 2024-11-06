@@ -48,6 +48,7 @@
 
 .topic-text {
   color: #1777ff !important;
+  margin: 0 !important;
 }
 
 .space-container {
@@ -56,6 +57,7 @@
 
 .footer-form {
   margin-top: 36px;
+  flex-wrap: wrap;
 
   .ant-typography:first-child {
     margin-right: 4px;
@@ -70,9 +72,37 @@
   color: #fff !important;
 }
 
+.info-text-mobile {
+  display: none;
+}
+
 .img-info {
   width: 45% !important;
   background: #fff;
   border-radius: 48px;
   padding: 16px;
+}
+
+@media (max-width: 991px) {
+  .login-form {
+    text-align: center;
+    align-items: center;
+  }
+
+  .info-panel {
+    display: none;
+  }
+
+  .splitter {
+    display: initial;
+  }
+
+  .panel {
+    height: 100%;
+    border-radius: 24px;
+  }
+
+  .info-text {
+    color: #1777ff !important;
+  }
 }

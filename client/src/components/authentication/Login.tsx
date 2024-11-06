@@ -142,7 +142,7 @@ function Login() {
             </Flex>
           </div>
         </Panel>
-        <Panel className="panel panel-right" resizable={false}>
+        <Panel className="panel panel-right info-panel" resizable={false}>
           <InfoPanel />
         </Panel>
       </Splitter>

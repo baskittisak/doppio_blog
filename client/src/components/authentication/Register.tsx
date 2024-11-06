@@ -92,11 +92,14 @@ function Register() {
   return (
     <div className="container">
       <Splitter className="splitter">
-        <Panel className="panel panel-left register-panel" resizable={false}>
+        <Panel
+          className="panel panel-left register-panel info-panel"
+          resizable={false}
+        >
           <InfoPanel />
         </Panel>
         <Panel className="panel panel-right register-panel" resizable={false}>
-          <div className="Register-form">
+          <div className="login-form">
             <Space align="center">
               <Image src={blog_logo} preview={false} width={48} height={48} />
               <Typography.Title level={3} className="topic-text">
