@@ -56,7 +56,7 @@ export const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user) {
-      const isPasswordCorrect = bcrypt.compare(password, user.password);
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (isPasswordCorrect) {
         signJwtToken(user, res);
       } else {

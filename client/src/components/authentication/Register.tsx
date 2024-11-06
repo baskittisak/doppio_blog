@@ -1,7 +1,6 @@
 import { memo, useCallback, useState } from "react";
 import "./auth.css";
 import axios from "axios";
-import { InputStatus } from "antd/lib/_util/statusUtils";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "../../utils/errorService";
 import Splitter from "antd/lib/splitter";
@@ -26,35 +25,6 @@ function Register() {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [status, setStatus] = useState<{
-    email?: InputStatus;
-    username?: InputStatus;
-    password?: InputStatus;
-  }>();
-
-  const onChangeEmail = useCallback((value: string) => {
-    setEmail(value);
-    setStatus((status) => ({
-      ...status,
-      email: !value ? "error" : "",
-    }));
-  }, []);
-
-  const onChangeUserName = useCallback((value: string) => {
-    setUsername(value);
-    setStatus((status) => ({
-      ...status,
-      username: !value ? "error" : "",
-    }));
-  }, []);
-
-  const onChangeUserPassword = useCallback((value: string) => {
-    setPassword(value);
-    setStatus((status) => ({
-      ...status,
-      password: !value ? "error" : "",
-    }));
-  }, []);
 
   const onRegister = useCallback(async () => {
     try {
@@ -72,14 +42,6 @@ function Register() {
   }, [email, username, password, navigate]);
 
   const onValidateRegister = useCallback(async () => {
-    if (!email || !username || !password) {
-      setStatus(() => ({
-        email: !email ? "error" : "",
-        username: !username ? "error" : "",
-        password: !password ? "error" : "",
-      }));
-    }
-
     if (email && username && password) {
       await onRegister();
     }
@@ -117,15 +79,13 @@ function Register() {
                   size="large"
                   placeholder="Email"
                   prefix={<MailOutlined />}
-                  onChange={(event) => onChangeEmail(event.target.value)}
-                  status={status?.email}
+                  onChange={(event) => setEmail(event.target.value)}
                 />
                 <Input
                   size="large"
                   placeholder="Username"
                   prefix={<UserOutlined />}
-                  onChange={(event) => onChangeUserName(event.target.value)}
-                  status={status?.username}
+                  onChange={(event) => setUsername(event.target.value)}
                 />
                 <Input.Password
                   size="large"
@@ -134,14 +94,14 @@ function Register() {
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
                   prefix={<LockOutlined />}
-                  onChange={(event) => onChangeUserPassword(event.target.value)}
-                  status={status?.password}
+                  onChange={(event) => setPassword(event.target.value)}
                 />
               </Space>
               <Button
                 type="primary"
                 size="large"
                 block
+                disabled={!username || !password || !email}
                 onClick={onValidateRegister}
               >
                 Register

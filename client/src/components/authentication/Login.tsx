@@ -2,7 +2,6 @@ import { memo, useCallback, useState } from "react";
 import "./auth.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { InputStatus } from "antd/lib/_util/statusUtils";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { handleError } from "../../utils/errorService";
@@ -31,26 +30,6 @@ function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [status, setStatus] = useState<{
-    username?: InputStatus;
-    password?: InputStatus;
-  }>();
-
-  const onChangeUserName = useCallback((value: string) => {
-    setUsername(value);
-    setStatus((status) => ({
-      ...status,
-      username: !value ? "error" : "",
-    }));
-  }, []);
-
-  const onChangeUserPassword = useCallback((value: string) => {
-    setPassword(value);
-    setStatus((status) => ({
-      ...status,
-      password: !value ? "error" : "",
-    }));
-  }, []);
 
   const onLogin = useCallback(async () => {
     try {
@@ -71,19 +50,6 @@ function Login() {
       handleError(error);
     }
   }, [username, password, navigate]);
-
-  const onValidateLogin = useCallback(async () => {
-    if (!username || !password) {
-      setStatus(() => ({
-        username: !username ? "error" : "",
-        password: !password ? "error" : "",
-      }));
-    }
-
-    if (username && password) {
-      await onLogin();
-    }
-  }, [username, password, onLogin]);
 
   const onGoToRegister = useCallback(() => {
     navigate("/register");
@@ -111,8 +77,7 @@ function Login() {
                   size="large"
                   placeholder="Username"
                   prefix={<UserOutlined />}
-                  onChange={(event) => onChangeUserName(event.target.value)}
-                  status={status?.username}
+                  onChange={(event) => setUsername(event.target.value)}
                 />
                 <Input.Password
                   size="large"
@@ -121,15 +86,15 @@ function Login() {
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
                   prefix={<LockOutlined />}
-                  onChange={(event) => onChangeUserPassword(event.target.value)}
-                  status={status?.password}
+                  onChange={(event) => setPassword(event.target.value)}
                 />
               </Space>
               <Button
                 type="primary"
                 size="large"
                 block
-                onClick={onValidateLogin}
+                disabled={!username || !password}
+                onClick={onLogin}
               >
                 Log in
               </Button>
