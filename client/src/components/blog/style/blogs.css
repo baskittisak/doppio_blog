@@ -5,3 +5,18 @@
   justify-content: center;
   flex-direction: column;
 }
+
+.blog-container {
+  height: 300px;
+  overflow: hidden;
+  padding-bottom: 16px;
+}
+
+.ant-card-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 220px;
+}
