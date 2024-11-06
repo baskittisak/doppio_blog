@@ -8,6 +8,7 @@ import { join } from "path";
 import { fileURLToPath } from "url";
 import { connectDatabase } from "./config/database.config.js";
 import { router as authRouter } from "./routes/auth.route.js";
+import { router as blogRouter } from "./routes/blog.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, "../..");
@@ -26,6 +27,7 @@ const options = {
 connectDatabase();
 
 app.use("/api", authRouter);
+app.use("/api", blogRouter);
 
 const { PORT } = process.env;
 
