@@ -4,13 +4,14 @@ import Cookies from "universal-cookie";
 import Register from ".././authentication/Register";
 import Login from ".././authentication/Login";
 import NotFound from "./NotFound";
+import Home from "../home/Home";
 
 const PageRoutes = () => {
   const routes = useMemo(() => {
     const cookies = new Cookies();
 
     if (cookies.get("access_token")) {
-      return <Route path="/" element={<div>Hello Doppio</div>} />;
+      return <Route path="/" element={<Home />} />;
     } else {
       return (
         <>

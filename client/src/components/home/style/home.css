@@ -1,0 +1,7 @@
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  padding: 96px 16px 16px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

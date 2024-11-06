@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { handleError } from "../../utils/errorService";
 import Splitter from "antd/lib/splitter";
 import Panel from "antd/lib/splitter/Panel";
-import Image from "antd/lib/image";
 import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
 import Input from "antd/lib/input";
@@ -17,8 +16,8 @@ import EyeInvisibleOutlined from "@ant-design/icons/EyeInvisibleOutlined";
 import LockOutlined from "@ant-design/icons/LockOutlined";
 import MailOutlined from "@ant-design/icons/MailOutlined";
 import notification from "antd/lib/notification";
-import blog_logo from "../../assets/blog_logo.png";
 import InfoPanel from "./InfoPanel";
+import BlogLogo from "../utils/BlogLogo";
 
 function Register() {
   const navigate = useNavigate();
@@ -62,12 +61,7 @@ function Register() {
         </Panel>
         <Panel className="panel panel-right register-panel" resizable={false}>
           <div className="login-form">
-            <Space align="center">
-              <Image src={blog_logo} preview={false} width={48} height={48} />
-              <Typography.Title level={3} className="topic-text">
-                Doppio Blog
-              </Typography.Title>
-            </Space>
+            <BlogLogo />
             <Typography.Title>Create your account</Typography.Title>
             <Space size={36} className="space-container" direction="vertical">
               <Space

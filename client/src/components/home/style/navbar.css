@@ -1,0 +1,21 @@
+.navbar-container {
+  width: 100vw;
+  height: 82px;
+  padding: 16px;
+  border-bottom: 1px solid #f2f2f2;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar-user {
+  background-color: #1777ff;
+}
+
+.username {
+  font-weight: 600;
+}
