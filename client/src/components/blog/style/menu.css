@@ -1,0 +1,9 @@
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tab-container {
+  width: fit-content;
+}

@@ -10,7 +10,6 @@ import modal from "antd/lib/modal";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 import ExclamationCircleOutlined from "@ant-design/icons/ExclamationCircleOutlined";
 
-
 function UserSection() {
   const cookies = new Cookies();
 
