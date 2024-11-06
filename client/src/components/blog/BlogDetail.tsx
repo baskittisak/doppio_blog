@@ -32,7 +32,7 @@ function BlogDetail() {
     <div className="handle-blog-container">
       <Space className="handle-blog-button">
         <Button onClick={onBack}>Back</Button>
-        {id && <DeleteBlog id={id} />}
+        {id && <DeleteBlog type="button" id={id} />}
         <Button type="primary" icon={<EditOutlined />} onClick={onEdit}>
           Edit
         </Button>
