@@ -39,7 +39,6 @@
   border-radius: 8px;
 }
 
-
 .input-title {
   font-size: 32px;
   font-weight: 700;
@@ -76,6 +75,11 @@
 
 .ql-disabled {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.detail-label {
+  word-break: keep-all;
+  margin: 0 !important;
 }
 
 @media (max-width: 991px) {

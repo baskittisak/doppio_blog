@@ -9,6 +9,7 @@ import Button from "antd/lib/button";
 import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
 import EditOutlined from "@ant-design/icons/EditOutlined";
+import DeleteBlog from "./DeleteBlog";
 
 function BlogDetail() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ function BlogDetail() {
     <div className="handle-blog-container">
       <Space className="handle-blog-button">
         <Button onClick={onBack}>Back</Button>
+        {id && <DeleteBlog type="button" id={id} />}
         <Button type="primary" icon={<EditOutlined />} onClick={onEdit}>
           Edit
         </Button>
