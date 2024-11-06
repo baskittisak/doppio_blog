@@ -85,8 +85,8 @@ function HandleBlog({ action }: HandleBlogProps) {
     }
   }, [title, content, isEdit, id, navigate]);
 
-  if (!data && !error) return <Loading total={3} />;
-  if (error) return <Error />;
+  if (isEdit && !data && !error) return <Loading total={3} />;
+  if (isEdit && error) return <Error />;
 
   return (
     <>

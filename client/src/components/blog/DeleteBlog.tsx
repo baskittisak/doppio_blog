@@ -4,17 +4,18 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "../../utils/errorService";
 import Button from "antd/lib/button";
+import Modal from "antd/lib/modal";
+import Space from "antd/lib/space";
+import Typography from "antd/lib/typography";
 import notification from "antd/lib/notification";
-import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
-import { Modal, Space, Typography } from "antd";
 import ExclamationCircleOutlined from "@ant-design/icons/ExclamationCircleOutlined";
+import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 
 interface DeleteBlogProps {
   id: string;
-  type: "menu" | "button";
 }
 
-function DeleteBlog({ id, type }: DeleteBlogProps) {
+function DeleteBlog({ id }: DeleteBlogProps) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -39,16 +40,14 @@ function DeleteBlog({ id, type }: DeleteBlogProps) {
 
   return (
     <>
-      {type === "button" && (
-        <Button
-          color="danger"
-          variant="solid"
-          icon={<DeleteOutlined />}
-          onClick={() => setIsOpenModal(true)}
-        >
-          Delete
-        </Button>
-      )}
+      <Button
+        color="danger"
+        variant="solid"
+        icon={<DeleteOutlined />}
+        onClick={() => setIsOpenModal(true)}
+      >
+        Delete
+      </Button>
       <Modal
         title={
           <Space>
