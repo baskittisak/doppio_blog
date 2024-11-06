@@ -42,9 +42,6 @@ const signJwtToken = (user, res) => {
   jwt.sign(
     payload,
     SECRET_KEY,
-    {
-      expiresIn: "1h",
-    },
     (error, token) => {
       if (error) throw error;
       res.status(200).json({ data: token, message: "User login successfully" });
