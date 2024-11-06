@@ -1,5 +1,5 @@
 import { memo } from "react";
-import "./auth.css";
+import "./style/auth.css";
 import Image from "antd/lib/image";
 import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";

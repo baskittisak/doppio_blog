@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react";
-import "./auth.css";
+import "./style/auth.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "../../utils/errorService";
