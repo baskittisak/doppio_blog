@@ -6,6 +6,8 @@ import { createServer } from "https";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { fileURLToPath } from "url";
+import { connectDatabase } from "./config/database.config.js";
+import { router as authRouter } from "./routes/auth.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, "../..");
@@ -21,9 +23,9 @@ const options = {
   cert: readFileSync(join(__dirname, "cert.pem")),
 };
 
-app.get("/", (_, res) => {
-  res.send("Hello, Doppio Blog");
-});
+connectDatabase();
+
+app.use("/api", authRouter);
 
 const { PORT } = process.env;
 
