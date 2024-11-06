@@ -20,6 +20,9 @@ const modules = {
   ],
 };
 
+const LIMIT_TITLE = 100;
+const LIMIT_CONTENT = 1000;
+
 interface HandleBlogProps {
   action: "create" | "edit";
 }
@@ -85,6 +88,12 @@ function HandleBlog({ action }: HandleBlogProps) {
           disabled={loading}
           onChange={(event) => setTitle(event.target.value)}
         />
+        <div className="counter">
+          <span className={title.length > LIMIT_TITLE ? "counter-text" : ""}>
+            {title.length}
+          </span>
+          /{LIMIT_TITLE}
+        </div>
         <ReactQuill
           modules={modules}
           value={content}
@@ -92,6 +101,14 @@ function HandleBlog({ action }: HandleBlogProps) {
           onChange={(value) => setContent(value)}
           placeholder="Tell your story..."
         />
+        <div className="counter">
+          <span
+            className={content.length > LIMIT_CONTENT ? "counter-text" : ""}
+          >
+            {content.length}
+          </span>
+          /{LIMIT_CONTENT}
+        </div>
       </div>
     </>
   );

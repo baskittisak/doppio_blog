@@ -39,10 +39,21 @@
   border-radius: 8px;
 }
 
+
 .input-title {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 16px;
+}
+
+.counter {
+  display: flex;
+  justify-content: flex-end;
+  color: rgba(0, 0, 0, 0.45);
+  margin: 8px 0 16px;
+}
+
+.counter-text {
+  color: #ff4d4f;
 }
 
 .ql-toolbar {
