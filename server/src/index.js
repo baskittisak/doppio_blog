@@ -11,7 +11,7 @@ import { router as authRouter } from "./routes/auth.route.js";
 import { router as blogRouter } from "./routes/blog.route.js";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = join(__filename, "../..");
+const __dirname = join(__filename, "../keys");
 
 const app = express();
 

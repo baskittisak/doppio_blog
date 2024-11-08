@@ -21,7 +21,6 @@ export const getAllBlog = async (_, res) => {
       id: blog._id,
       _id: undefined,
     }));
-
     res
       .status(200)
       .json({ data: blogs, message: "Blog retrieved successfully" });
