@@ -39,11 +39,11 @@ const PageRoutes = () => {
     if (cookies.get("access_token")) {
       return (
         <>
-          {paths.map((path) => (
+          {paths.map(({ path, component }) => (
             <Route
-              key={path.path}
-              path={path.path}
-              element={<Layout>{path.component}</Layout>}
+              key={path}
+              path={path}
+              element={<Layout>{component}</Layout>}
             />
           ))}
         </>

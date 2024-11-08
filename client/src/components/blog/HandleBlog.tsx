@@ -24,7 +24,7 @@ const modules = {
 };
 
 const LIMIT_TITLE = 100;
-const LIMIT_CONTENT = 1000;
+const LIMIT_CONTENT = 2000;
 
 interface HandleBlogProps {
   action: "create" | "edit";
@@ -41,14 +41,14 @@ function HandleBlog({ action }: HandleBlogProps) {
     return action === "edit";
   }, [action]);
 
-  const { data, error } = useSWR<IBlog>(id && isEdit && `/blog/${id}`);
+  const { data: blog, error } = useSWR<IBlog>(id && isEdit && `/blog/${id}`);
 
   const initialData = useCallback(() => {
-    if (data) {
-      setTitle(data.title);
-      setContent(data.content);
+    if (blog) {
+      setTitle(blog.title);
+      setContent(blog.content);
     }
-  }, [data]);
+  }, [blog]);
 
   useEffect(() => {
     if (isEdit && id) {
@@ -85,7 +85,7 @@ function HandleBlog({ action }: HandleBlogProps) {
     }
   }, [title, content, isEdit, id, navigate]);
 
-  if (isEdit && !data && !error) return <Loading total={3} />;
+  if (isEdit && !blog && !error) return <Loading total={3} />;
   if (isEdit && error) return <Error />;
 
   return (

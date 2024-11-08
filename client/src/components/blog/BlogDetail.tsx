@@ -15,7 +15,7 @@ function BlogDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data, error } = useSWR<IBlog>(id && `/blog/${id}`);
+  const { data: blog, error } = useSWR<IBlog>(id && `/blog/${id}`);
 
   const onBack = useCallback(() => {
     navigate("/");
@@ -25,7 +25,7 @@ function BlogDetail() {
     navigate(`/edit/${id}`);
   }, [id, navigate]);
 
-  if (!data && !error) return <Loading total={3} />;
+  if (!blog && !error) return <Loading total={3} />;
   if (error) return <Error />;
 
   return (
@@ -37,10 +37,10 @@ function BlogDetail() {
           Edit
         </Button>
       </Space>
-      {data && (
+      {blog && (
         <>
-          <Typography.Title level={1}>{data?.title}</Typography.Title>
-          <div dangerouslySetInnerHTML={{ __html: data.content }} />
+          <Typography.Title level={1}>{blog.title}</Typography.Title>
+          <div dangerouslySetInnerHTML={{ __html: blog.content }} />
         </>
       )}
     </div>

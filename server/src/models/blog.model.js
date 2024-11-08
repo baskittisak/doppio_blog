@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      maxlength: 1000,
+      maxlength: 2000,
     },
   },
   { versionKey: false }
@@ -19,5 +19,5 @@ export default mongoose.model("blogs", blogSchema);
 
 export const typeBlog = z.object({
   title: z.string().min(1, "Title is required").max(100),
-  content: z.string().min(1, "Content is required").max(1000),
+  content: z.string().min(1, "Content is required").max(2000),
 });

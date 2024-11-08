@@ -11,23 +11,23 @@ import Error from "../utils/Error";
 import Blog from "./Blog";
 
 function Blogs() {
-  const { data, error, mutate } = useSWR<IBlog[]>("/blogs");
+  const { data: blogs, error, mutate } = useSWR<IBlog[]>("/blogs");
 
-  if (!data && !error) return <Loading total={3} />;
+  if (!blogs && !error) return <Loading total={3} />;
   if (error) return <Error />;
 
   return (
     <div className="blogs-container">
       <Menu />
-      {data && !data.length && (
+      {blogs && !blogs.length && (
         <Empty
           className="empty-blog"
           description="There's no blog post yet. Start by creating your first post and share your amazing ideas with the world!"
         />
       )}
-      {data && data.length && (
+      {blogs && blogs.length && (
         <Row gutter={[24, 24]}>
-          {data.map((blog) => (
+          {blogs.map((blog) => (
             <Col key={blog.id} xs={24} sm={24} md={12} lg={8}>
               <Blog {...blog} mutate={mutate} />
             </Col>
