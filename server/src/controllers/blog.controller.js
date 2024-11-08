@@ -1,8 +1,20 @@
 import Blog from "../models/blog.model.js";
+import jwt from "jsonwebtoken";
+
+export const getUsername = (req) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  const { username } = jwt.decode(token);
+  return username;
+};
 
 export const createBlog = async (req, res) => {
   try {
-    await new Blog(req.body).save();
+    await new Blog({
+      ...req.body,
+      createdBy: getUsername(req),
+      updatedBy: getUsername(req),
+    }).save();
     res.status(201).json({ message: "Blog created successfully" });
   } catch (error) {
     if (error instanceof Error) {
@@ -13,9 +25,9 @@ export const createBlog = async (req, res) => {
   }
 };
 
-export const getAllBlog = async (_, res) => {
+export const getAllBlog = async (req, res) => {
   try {
-    const allBlogs = await Blog.find({}).exec();
+    const allBlogs = await Blog.find({ createdBy: getUsername(req) }).exec();
     const blogs = allBlogs.map((blog) => ({
       ...blog.toObject(),
       id: blog._id,
@@ -36,7 +48,9 @@ export const getAllBlog = async (_, res) => {
 export const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
-    const blog = await Blog.findOne({ _id: id }).exec();
+    const blog = await Blog.findOne({
+      _id: id,
+    }).exec();
 
     if (blog) {
       const formattedBlog = {
@@ -67,7 +81,13 @@ export const updateBlog = async (req, res) => {
     const blog = await Blog.findOne({ _id: id }).exec();
 
     if (blog) {
-      const blogUpdated = await Blog.findOneAndUpdate({ _id: id }, req.body, {
+      const body = {
+        ...req.body,
+        createdBy: getUsername(req),
+        updatedBy: getUsername(req),
+      };
+
+      await Blog.findOneAndUpdate({ _id: id }, body, {
         new: true,
       }).exec();
 

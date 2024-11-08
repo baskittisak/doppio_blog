@@ -4,16 +4,23 @@ import {
   getBlogById,
   updateBlog,
   deleteBlog,
+  getUsername,
 } from "../../controllers/blog.controller.js";
 import Blog from "../../models/blog.model.js";
+import jwt from "jsonwebtoken";
 
 jest.mock("../../models/blog.model.js");
+jest.mock("jsonwebtoken");
 
 describe("Blog Controller", () => {
   let request, response;
 
   beforeEach(() => {
-    request = { body: {}, params: {} };
+    request = {
+      headers: { authorization: `Bearer Mock Token` },
+      body: {},
+      params: {},
+    };
     response = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
@@ -28,6 +35,7 @@ describe("Blog Controller", () => {
     it("should create a blog and return 201 status", async () => {
       Blog.prototype.save.mockResolvedValue({});
 
+      jwt.decode.mockReturnValue({ username: "username" });
       request.body = { title: "Test Blog", content: "Test Content" };
 
       await createBlog(request, response);
@@ -159,9 +167,18 @@ describe("Blog Controller", () => {
 
   describe("updateBlog", () => {
     it("should update the blog and return 200 status", async () => {
-      const mockBlog = { _id: "1", title: "Old Title", content: "Old Content" };
+      const mockBlog = {
+        _id: "1",
+        title: "Old Title",
+        content: "Old Content",
+      };
       request.params.id = "1";
-      request.body = { title: "Updated Title", content: "Updated Content" };
+      request.body = {
+        title: "Updated Title",
+        content: "Updated Content",
+        createdBy: "username",
+        updatedBy: "username",
+      };
 
       Blog.findOne.mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockBlog),
@@ -258,6 +275,22 @@ describe("Blog Controller", () => {
 
       expect(response.status).toHaveBeenCalledWith(500);
       expect(response.json).toHaveBeenCalledWith({ message: "Database error" });
+    });
+  });
+
+  describe("getUsername", () => {
+    it("should return the username when a valid JWT token is provided", () => {
+      const req = {
+        headers: {
+          authorization: "Bearer Mock Token",
+        },
+      };
+      const mockDecode = jest
+        .spyOn(jwt, "decode")
+        .mockReturnValue({ username: "testuser" });
+      const result = getUsername(req);
+      expect(result).toBe("testuser");
+      mockDecode.mockRestore();
     });
   });
 });

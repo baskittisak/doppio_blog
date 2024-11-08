@@ -11,6 +11,8 @@ const blogSchema = new mongoose.Schema(
       type: String,
       maxlength: 2000,
     },
+    createdBy: String,
+    updatedBy: String,
   },
   { versionKey: false }
 );
