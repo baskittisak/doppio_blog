@@ -19,10 +19,6 @@ const paths = [
     component: <HandleBlog action="create" />,
   },
   {
-    path: "/new-blog",
-    component: <HandleBlog action="create" />,
-  },
-  {
     path: "/edit/:id",
     component: <HandleBlog action="edit" />,
   },

@@ -40,12 +40,6 @@ function Register() {
     }
   }, [email, username, password, navigate]);
 
-  const onValidateRegister = useCallback(async () => {
-    if (email && username && password) {
-      await onRegister();
-    }
-  }, [email, username, password, onRegister]);
-
   const onGoToLogin = useCallback(() => {
     navigate("/");
   }, [navigate]);
@@ -96,7 +90,7 @@ function Register() {
                 size="large"
                 block
                 disabled={!username || !password || !email}
-                onClick={onValidateRegister}
+                onClick={onRegister}
               >
                 Register
               </Button>
